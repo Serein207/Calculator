@@ -41,16 +41,12 @@ void CalResult::mul() {
 
 void CalResult::div() {
   handleStack();
-  if (op2() == 0.0)
-    return;
   m_figStack.push(op1() / op2());
 }
 
 
 void CalResult::mod() {
   handleStack();
-  if (op1() == 0.0)
-    return;
   m_figStack.push(std::fmod(op1(), op2()));
 }
 
