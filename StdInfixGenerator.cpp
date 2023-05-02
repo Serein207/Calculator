@@ -8,7 +8,7 @@ void StdInfixGenerator::format(const QString& infix) {
   m_stdInfix = infix;
 
   auto iter =
-    std::ranges::find_if(
+    std::find_if(
       m_stdInfix.begin(),
       m_stdInfix.end(),
       [](const QChar ch) {
