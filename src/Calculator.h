@@ -26,6 +26,7 @@ private:
   Ui::CalculatorClass* _ui;
   QVector<QString> m_postfix;
   QString m_infix;
+  QString m_lastInfix;
   void iniUI();
   inline static bool m_equalIsPushed = false;
   inline static bool m_primarySymIsPushed = false;

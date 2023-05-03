@@ -24,16 +24,17 @@ void Calculator::iniUI() {
 
 void Calculator::onButtonGroupClicked(const QAbstractButton* btn) {
   QString name = btn->text();
-
   if (name == "C") {
     _ui->lineEdit->clear();
     m_infix = "";
     _ui->lineEdit->insert("0");
   }
   else if (name == "CE") {
-    _ui->lineEdit->clear();
-    m_infix = "";
-    _ui->lineEdit->insert("0");
+    m_infix = m_lastInfix;
+    _ui->lineEdit->setText("0");
+    if (m_equalIsPushed)
+      m_infix = "0";
+    _ui->expLineEdit->setText(m_infix);
   }
   else if (name == "Del") {
     _ui->lineEdit->setCursorPosition(_ui->lineEdit->cursorPosition() - 1);
@@ -43,12 +44,16 @@ void Calculator::onButtonGroupClicked(const QAbstractButton* btn) {
     m_infix.erase(m_infix.end() - 1);
   }
   else if (name == "=") {
-    _ui->lineEdit->setText(QString("%1").arg(getResult()));
+    const QString result = QString("%1").arg(getResult());
+    _ui->lineEdit->setText(result);
+    m_infix = QString("%1").arg(result);
     m_equalIsPushed = true;
     m_powSymIsPushed = false;
     m_primarySymIsPushed = false;
   }
   else if (Tools::isPowSym(name)) {
+    m_lastInfix = m_infix;
+
     if (m_primarySymIsPushed) {
       m_infix.erase(m_infix.end() - 1);
     }
@@ -82,6 +87,8 @@ void Calculator::onButtonGroupClicked(const QAbstractButton* btn) {
     _ui->expLineEdit->insert(name);
   }
   else if (Tools::isPrimarySym(name)) {
+    m_lastInfix = m_infix;
+
     if (m_primarySymIsPushed) {
       m_infix.erase(m_infix.end() - 1);
     }
@@ -96,6 +103,9 @@ void Calculator::onButtonGroupClicked(const QAbstractButton* btn) {
   }
   else if (name >= "0" && name <= "9" ||
     name == ".") {
+    if (m_primarySymIsPushed || m_powSymIsPushed)
+      m_lastInfix = m_infix;
+
     if (((_ui->lineEdit->text() == "0" ||
         m_equalIsPushed) &&
       name == ".")) {
