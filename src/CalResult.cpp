@@ -44,7 +44,6 @@ void CalResult::div() {
   m_figStack.push(op1() / op2());
 }
 
-
 void CalResult::mod() {
   handleStack();
   m_figStack.push(std::fmod(op1(), op2()));

@@ -31,6 +31,7 @@ private:
   inline static bool m_equalIsPushed = false;
   inline static bool m_primarySymIsPushed = false;
   inline static bool m_powSymIsPushed = false;
+  void error();
 
 public:
   double getResult();

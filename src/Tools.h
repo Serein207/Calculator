@@ -9,7 +9,7 @@ public:
       (symbol == "×") ||
       (symbol == "÷") ||
       (symbol == "%") ||
-      (symbol == "+/-");
+      (symbol == "^");
   }
 
   static bool isPowSym(const QString& symbol) {
